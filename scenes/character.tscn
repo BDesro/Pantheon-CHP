@@ -1,0 +1,42 @@
+[gd_scene load_steps=7 format=3 uid="uid://bmron2542edr5"]
+
+[ext_resource type="Script" path="res://scripts/character.gd" id="1_052f6"]
+[ext_resource type="Texture2D" uid="uid://bs0tg8kbef8ov" path="res://assets/Prototype Character Assets/Prototype_Character/Prototype_Character.png" id="1_e4nms"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_smk2x"]
+atlas = ExtResource("1_e4nms")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q3evx"]
+atlas = ExtResource("1_e4nms")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8qxps"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_smk2x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q3evx")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_eayg2"]
+radius = 4.0
+
+[node name="Character" type="CharacterBody2D"]
+script = ExtResource("1_052f6")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -7)
+sprite_frames = SubResource("SpriteFrames_8qxps")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -5)
+shape = SubResource("CircleShape2D_eayg2")
