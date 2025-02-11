@@ -1,10 +1,12 @@
-[gd_scene load_steps=2 format=3 uid="uid://b7nrgvcqd64wo"]
+[gd_scene load_steps=3 format=3 uid="uid://b7nrgvcqd64wo"]
 
-[ext_resource type="PackedScene" uid="uid://bmron2542edr5" path="res://scenes/character.tscn" id="1_n68ml"]
+[ext_resource type="Script" path="res://scripts/game.gd" id="1_on153"]
+[ext_resource type="PackedScene" uid="uid://b8t51qj22uqqy" path="res://scenes/unit.tscn" id="2_vbpay"]
 
 [node name="Game" type="Node2D"]
+script = ExtResource("1_on153")
 
-[node name="Character" parent="." instance=ExtResource("1_n68ml")]
+[node name="TestUnit" parent="." instance=ExtResource("2_vbpay")]
 position = Vector2(6, 14)
 
 [node name="Camera2D" type="Camera2D" parent="."]

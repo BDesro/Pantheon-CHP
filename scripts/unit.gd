@@ -1,16 +1,22 @@
+class_name Unit
+
 extends CharacterBody2D
 
 @export var max_health: int = 100
 @export var speed = 200 # Base movement speed (pixels/sec)
 
+# Distinguish between Player and AI control
+enum ControlState { Player, AI }
+var control_state: ControlState = ControlState.AI
+
 # Define individual ability cooldowns
 @export var ability_cooldowns: Dictionary = {
-	"ability_1": 0.0,
-	"ability_2": 0.0,
-	"ability_3": 0.0,
-	"ability_4": 0.0,
-	"ability_5": 0.0,
-	"ability_6": 0.0
+	"ability_1": 1.0,
+	"ability_2": 1.0,
+	"ability_3": 1.0,
+	"ability_4": 1.0,
+	"ability_5": 1.0,
+	"ability_6": 1.0
 }
 
 # Track ability cooldown status
@@ -48,8 +54,22 @@ func _ready():
 		timer.set_meta("ability_name", ability_name)
 		
 		add_child(timer)
-	
-func _physics_process(_delta):
-	var input_direction = Input.get_vector("left", "right", "up", "down")
-	velocity = input_direction * speed;
+
+func set_control_state(new_state: ControlState):
+	control_state = new_state
+
+func move_unit(desired_direction: Vector2):
+	velocity = desired_direction * speed
 	move_and_slide()
+
+func _process(delta):
+	if control_state == ControlState.Player: # Get direction from Input Mapping
+		var input_direction = Input.get_vector("left", "right", "up", "down")
+		move_unit(input_direction)
+	elif control_state == ControlState.AI:
+		print("Stuck in AI mode!")
+		handle_ai_movement(delta)
+
+func handle_ai_movement(_delta):
+	# Default AI movement: Stop moving (Implement Later)
+	move_unit(Vector2.ZERO)
