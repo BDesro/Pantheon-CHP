@@ -1,14 +1,14 @@
-[gd_scene load_steps=7 format=3 uid="uid://bmron2542edr5"]
+[gd_scene load_steps=7 format=3 uid="uid://b8t51qj22uqqy"]
 
-[ext_resource type="Script" path="res://scripts/unit.gd" id="1_052f6"]
-[ext_resource type="Texture2D" uid="uid://bs0tg8kbef8ov" path="res://assets/Prototype Character Assets/Prototype_Character/Prototype_Character.png" id="1_e4nms"]
+[ext_resource type="Script" path="res://scripts/unit.gd" id="1_dp7ag"]
+[ext_resource type="Texture2D" uid="uid://bs0tg8kbef8ov" path="res://assets/Prototype Character Assets/Prototype_Character/Prototype_Character.png" id="2_y0nmu"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_smk2x"]
-atlas = ExtResource("1_e4nms")
+atlas = ExtResource("2_y0nmu")
 region = Rect2(0, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_q3evx"]
-atlas = ExtResource("1_e4nms")
+atlas = ExtResource("2_y0nmu")
 region = Rect2(32, 0, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_8qxps"]
@@ -28,8 +28,8 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_eayg2"]
 radius = 4.0
 
-[node name="Character" type="CharacterBody2D"]
-script = ExtResource("1_052f6")
+[node name="Unit" type="CharacterBody2D"]
+script = ExtResource("1_dp7ag")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -7)

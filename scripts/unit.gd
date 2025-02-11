@@ -5,16 +5,26 @@ extends CharacterBody2D
 
 # Define individual ability cooldowns
 @export var ability_cooldowns: Dictionary = {
-	"LMB":    0.0,
-	"RMB":    0.0,
-	"Space":  0.0,
-	"LSHIFT": 0.0,
-	"E":      0.0,
-	"Q":      0.0
+	"ability_1": 0.0,
+	"ability_2": 0.0,
+	"ability_3": 0.0,
+	"ability_4": 0.0,
+	"ability_5": 0.0,
+	"ability_6": 0.0
 }
 
 # Track ability cooldown status
 var ability_on_cd: Dictionary = {}
+
+# Input-to-ability mapping (To be overridden in child nodes)
+var ability_bindings: Dictionary = {
+	"ability_1": "lmb",
+	"ability_2": "rmb",
+	"ability_3": "space",
+	"ability_4": "shift",
+	"ability_5": "e",
+	"ability_6": "q"
+}
 
 # Set initial current health to maximum
 var current_health = max_health
@@ -33,8 +43,9 @@ func _ready():
 		timer.one_shot = true
 		
 		# Connect timer's timeout signal to the function
-		timer.set_meta("ability_name", ability_name)
 		timer.connect("timeout", Callable(self, "_on_cooldown_end"))
+		# Store the ability name in the timer's metadata for reference
+		timer.set_meta("ability_name", ability_name)
 		
 		add_child(timer)
 	
