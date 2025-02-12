@@ -1,6 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://b8t51qj22uqqy"]
+[gd_scene load_steps=11 format=3 uid="uid://b8t51qj22uqqy"]
 
-[ext_resource type="Script" path="res://scripts/unit.gd" id="1_dp7ag"]
+[ext_resource type="Script" path="res://scripts/character.gd" id="1_dp7ag"]
 [ext_resource type="Texture2D" uid="uid://bs0tg8kbef8ov" path="res://assets/Prototype Character Assets/Prototype_Character/Prototype_Character.png" id="2_y0nmu"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_smk2x"]
@@ -10,6 +10,22 @@ region = Rect2(0, 0, 32, 32)
 [sub_resource type="AtlasTexture" id="AtlasTexture_q3evx"]
 atlas = ExtResource("2_y0nmu")
 region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k4owf"]
+atlas = ExtResource("2_y0nmu")
+region = Rect2(0, 128, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1tlkg"]
+atlas = ExtResource("2_y0nmu")
+region = Rect2(32, 128, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5v30r"]
+atlas = ExtResource("2_y0nmu")
+region = Rect2(64, 128, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uug4n"]
+atlas = ExtResource("2_y0nmu")
+region = Rect2(96, 128, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_8qxps"]
 animations = [{
@@ -23,12 +39,34 @@ animations = [{
 "loop": true,
 "name": &"idle",
 "speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"walk_left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k4owf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1tlkg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5v30r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uug4n")
+}],
+"loop": true,
+"name": &"walk_right",
+"speed": 5.0
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_eayg2"]
 radius = 4.0
 
-[node name="Unit" type="CharacterBody2D"]
+[node name="Character" type="CharacterBody2D"]
 script = ExtResource("1_dp7ag")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

@@ -1,13 +1,13 @@
-class_name Unit
-
 extends CharacterBody2D
+
+class_name Character
 
 @export var max_health: int = 100
 @export var speed = 200 # Base movement speed (pixels/sec)
 
 # Distinguish between Player and AI control
 enum ControlState { Player, AI }
-var control_state: ControlState = ControlState.AI
+var control_state: ControlState = ControlState.Player
 
 # Define individual ability cooldowns
 @export var ability_cooldowns: Dictionary = {
@@ -63,10 +63,7 @@ func move_unit(desired_direction: Vector2):
 	move_and_slide()
 
 func _process(delta):
-	if control_state == ControlState.Player: # Get direction from Input Mapping
-		var input_direction = Input.get_vector("left", "right", "up", "down")
-		move_unit(input_direction)
-	elif control_state == ControlState.AI:
+	if control_state == ControlState.AI:
 		print("Stuck in AI mode!")
 		handle_ai_movement(delta)
 
