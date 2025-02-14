@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://b8t51qj22uqqy"]
+[gd_scene load_steps=21 format=3 uid="uid://b8t51qj22uqqy"]
 
 [ext_resource type="Script" path="res://scripts/character.gd" id="1_dp7ag"]
 [ext_resource type="Texture2D" uid="uid://bs0tg8kbef8ov" path="res://assets/Prototype Character Assets/Prototype_Character/Prototype_Character.png" id="2_y0nmu"]
@@ -10,6 +10,30 @@ region = Rect2(0, 0, 32, 32)
 [sub_resource type="AtlasTexture" id="AtlasTexture_q3evx"]
 atlas = ExtResource("2_y0nmu")
 region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3n8el"]
+atlas = ExtResource("2_y0nmu")
+region = Rect2(2, 64, 31, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xvc32"]
+atlas = ExtResource("2_y0nmu")
+region = Rect2(33, 64, 31, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kpken"]
+atlas = ExtResource("2_y0nmu")
+region = Rect2(2, 96, 31, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_34sx6"]
+atlas = ExtResource("2_y0nmu")
+region = Rect2(33, 96, 31, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jh1s3"]
+atlas = ExtResource("2_y0nmu")
+region = Rect2(64, 96, 31, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yx5pc"]
+atlas = ExtResource("2_y0nmu")
+region = Rect2(95, 96, 31, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_k4owf"]
 atlas = ExtResource("2_y0nmu")
@@ -27,6 +51,22 @@ region = Rect2(64, 128, 32, 32)
 atlas = ExtResource("2_y0nmu")
 region = Rect2(96, 128, 32, 32)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_fx025"]
+atlas = ExtResource("2_y0nmu")
+region = Rect2(2, 160, 31, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_grsj0"]
+atlas = ExtResource("2_y0nmu")
+region = Rect2(33, 160, 31, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_66ysk"]
+atlas = ExtResource("2_y0nmu")
+region = Rect2(64, 160, 31, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qwvn0"]
+atlas = ExtResource("2_y0nmu")
+region = Rect2(95, 160, 31, 32)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_8qxps"]
 animations = [{
 "frames": [{
@@ -37,12 +77,35 @@ animations = [{
 "texture": SubResource("AtlasTexture_q3evx")
 }],
 "loop": true,
-"name": &"idle",
+"name": &"idle_forward",
 "speed": 5.0
 }, {
-"frames": [],
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3n8el")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xvc32")
+}],
 "loop": true,
-"name": &"walk_left",
+"name": &"idle_up",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kpken")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_34sx6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jh1s3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yx5pc")
+}],
+"loop": true,
+"name": &"walk_forward",
 "speed": 5.0
 }, {
 "frames": [{
@@ -59,12 +122,30 @@ animations = [{
 "texture": SubResource("AtlasTexture_uug4n")
 }],
 "loop": true,
-"name": &"walk_right",
+"name": &"walk_side",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fx025")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_grsj0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_66ysk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qwvn0")
+}],
+"loop": true,
+"name": &"walk_up",
 "speed": 5.0
 }]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_eayg2"]
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3rjh8"]
 radius = 4.0
+height = 14.0
 
 [node name="Character" type="CharacterBody2D"]
 script = ExtResource("1_dp7ag")
@@ -72,11 +153,11 @@ script = ExtResource("1_dp7ag")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -7)
 sprite_frames = SubResource("SpriteFrames_8qxps")
-animation = &"idle"
-autoplay = "idle"
+animation = &"idle_up"
+autoplay = "idle_forward"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -5)
-shape = SubResource("CircleShape2D_eayg2")
+position = Vector2(0, -7)
+shape = SubResource("CapsuleShape2D_3rjh8")
 
 [node name="Timer" type="Timer" parent="."]

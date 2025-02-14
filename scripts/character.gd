@@ -5,9 +5,18 @@ class_name Character
 @export var max_health: int = 100
 @export var speed = 200 # Base movement speed (pixels/sec)
 
+# Bounds for character position
+var min_x = -20 * 16
+var max_x = 19 * 16
+var min_y = -20 * 16
+var max_y = 19 * 16
+
 # Distinguish between Player and AI control
 enum ControlState { Player, AI }
 var control_state: ControlState = ControlState.Player
+
+# Saves the last y axis value of the character's velocity
+var prev_y = 0;
 
 # Define individual ability cooldowns
 @export var ability_cooldowns: Dictionary = {
@@ -66,6 +75,25 @@ func _process(delta):
 	if control_state == ControlState.AI:
 		print("Stuck in AI mode!")
 		handle_ai_movement(delta)
+		
+	if velocity.x < 0:
+		$AnimatedSprite2D.flip_h = true
+	if velocity.x > 0:
+		$AnimatedSprite2D.flip_h = false
+	
+	if velocity.x != 0:
+		$AnimatedSprite2D.play("walk_side")
+		prev_y = 0
+	elif velocity.y > 0:
+		$AnimatedSprite2D.play("walk_forward")
+		prev_y = 1
+	elif velocity.y < 0:
+		$AnimatedSprite2D.play("walk_up")
+		prev_y = -1
+	elif prev_y == -1:
+		$AnimatedSprite2D.play("idle_up")
+	else:
+		$AnimatedSprite2D.play("idle_forward")
 
 func handle_ai_movement(_delta):
 	# Default AI movement: Stop moving (Implement Later)

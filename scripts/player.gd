@@ -11,12 +11,12 @@ func _ready():
 	current_character = $Character
 	camera = $Camera2D
 
-func _process(delta):
+func _process(_delta):
 	handle_input()
 	
 	if current_character:
 		camera.global_position = current_character.global_position
-	
+
 func handle_input():
 	if not current_character:
 		return
