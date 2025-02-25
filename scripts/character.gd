@@ -3,7 +3,10 @@ extends CharacterBody2D
 class_name Character
 
 @export var max_health: int = 100
+# Set initial current health to maximum
+@export var current_health = max_health
 @export var speed = 200 # Base movement speed (pixels/sec)
+@export var ascension_tier: int
 
 # Bounds for character position
 var min_x = -20 * 16
@@ -40,9 +43,6 @@ var ability_bindings: Dictionary = {
 	"ability_5": "e",
 	"ability_6": "q"
 }
-
-# Set initial current health to maximum
-var current_health = max_health
 
 func _ready():
 	current_health = max_health # Ensure current health begins at max

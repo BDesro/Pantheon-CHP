@@ -1,16 +1,16 @@
 [gd_scene load_steps=17 format=4 uid="uid://cxvl2dyidyuhn"]
 
-[ext_resource type="Texture2D" uid="uid://dgcmaatrvhbtu" path="res://assets/SimpleSprites/SimpleSprites/Pasto[1].png" id="1_m4iwv"]
-[ext_resource type="PackedScene" uid="uid://bhgrhv3frpheo" path="res://scenes/player.tscn" id="1_ydvnq"]
-[ext_resource type="Texture2D" uid="uid://p3hca0abyple" path="res://assets/SimpleSprites/SimpleSprites/Pasto[2].png" id="2_vgbt6"]
-[ext_resource type="Texture2D" uid="uid://dlfbl00l2wmvi" path="res://assets/SimpleSprites/SimpleSprites/PastoSuperior[1].png" id="3_0tst0"]
-[ext_resource type="Texture2D" uid="uid://cquuth2rbwspc" path="res://assets/SimpleSprites/SimpleSprites/PastoSuperior[2].png" id="4_snl2j"]
-[ext_resource type="Texture2D" uid="uid://dotlj6evc3aob" path="res://assets/SimpleSprites/SimpleSprites/Tierra[1].png" id="5_eteb1"]
-[ext_resource type="Texture2D" uid="uid://vbueu20k0scm" path="res://assets/SimpleSprites/SimpleSprites/fullSimpleTileset.png" id="6_q51d8"]
+[ext_resource type="Texture2D" uid="uid://dgcmaatrvhbtu" path="res://assets/SimpleSprites/SimpleSprites/Pasto[1].png" id="1_mvlw5"]
+[ext_resource type="Texture2D" uid="uid://p3hca0abyple" path="res://assets/SimpleSprites/SimpleSprites/Pasto[2].png" id="2_5yrhh"]
+[ext_resource type="Texture2D" uid="uid://dlfbl00l2wmvi" path="res://assets/SimpleSprites/SimpleSprites/PastoSuperior[1].png" id="3_3st3i"]
+[ext_resource type="Texture2D" uid="uid://cquuth2rbwspc" path="res://assets/SimpleSprites/SimpleSprites/PastoSuperior[2].png" id="4_pmbd4"]
+[ext_resource type="Texture2D" uid="uid://dotlj6evc3aob" path="res://assets/SimpleSprites/SimpleSprites/Tierra[1].png" id="5_dlf15"]
+[ext_resource type="Texture2D" uid="uid://vbueu20k0scm" path="res://assets/SimpleSprites/SimpleSprites/fullSimpleTileset.png" id="6_2oyix"]
+[ext_resource type="PackedScene" uid="uid://bhgrhv3frpheo" path="res://scenes/Player.tscn" id="7_siyto"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_shtey"]
 resource_name = "grass"
-texture = ExtResource("1_m4iwv")
+texture = ExtResource("1_mvlw5")
 0:0/0 = 0
 1:0/0 = 0
 0:1/0 = 0
@@ -18,7 +18,7 @@ texture = ExtResource("1_m4iwv")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_v2jno"]
 resource_name = "grass_dirt_right"
-texture = ExtResource("2_vgbt6")
+texture = ExtResource("2_5yrhh")
 0:0/0 = 0
 1:0/0 = 0
 0:1/0 = 0
@@ -26,7 +26,7 @@ texture = ExtResource("2_vgbt6")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mjiah"]
 resource_name = "grass_dirt_edge"
-texture = ExtResource("3_0tst0")
+texture = ExtResource("3_3st3i")
 0:0/0 = 0
 1:0/0 = 0
 1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
@@ -36,7 +36,7 @@ texture = ExtResource("3_0tst0")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_c4pp8"]
 resource_name = "grass_dirt_corner"
-texture = ExtResource("4_snl2j")
+texture = ExtResource("4_pmbd4")
 0:0/0 = 0
 1:0/0 = 0
 0:1/0 = 0
@@ -44,7 +44,7 @@ texture = ExtResource("4_snl2j")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_yuvrj"]
 resource_name = "dirt"
-texture = ExtResource("5_eteb1")
+texture = ExtResource("5_dlf15")
 0:0/0 = 0
 1:0/0 = 0
 0:1/0 = 0
@@ -52,7 +52,7 @@ texture = ExtResource("5_eteb1")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_kjhgn"]
 resource_name = "grass"
-texture = ExtResource("6_q51d8")
+texture = ExtResource("6_2oyix")
 0:0/0 = 0
 0:1/0 = 0
 1:0/0 = 0
@@ -85,7 +85,7 @@ sources/5 = SubResource("TileSetAtlasSource_kjhgn")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jmodr"]
 resource_name = "fullSimpleTileset"
-texture = ExtResource("6_q51d8")
+texture = ExtResource("6_2oyix")
 0:0/0 = 0
 1:0/0 = 0
 2:0/0 = 0
@@ -125,6 +125,6 @@ tile_set = SubResource("TileSet_hs5p5")
 tile_map_data = PackedByteArray("AAATAP3/AAADAAAAAFAUAP7/AAAFAAAAAAAUAP//AAAFAAEAAAAUAAAAAAAFAAAAAAAUAAEAAAAFAAEAAAATAAIAAAADAAAAAGDs/wIAAAADAAEAAGDs//3/AAADAAEAAFDt/xMAAAAEAAAAAFDt/xQAAAAFAAAAAFDs/xMAAAAEAAEAAFDs/xQAAAAFAAEAAFATABMAAAAEAAAAAFATABQAAAAFAAAAAFASABMAAAAEAAEAAFASABQAAAAFAAEAAFDs/+z/AAAEAAAAAGDs/+v/AAAFAAAAAGDt/+z/AAAEAAEAAGDt/+v/AAAFAAEAAGASAOz/AAAEAAAAAGASAOv/AAAFAAAAAGATAOz/AAAEAAEAAGATAOv/AAAFAAEAAGA=")
 tile_set = SubResource("TileSet_qlyl7")
 
-[node name="Player" parent="." instance=ExtResource("1_ydvnq")]
+[node name="Player" parent="." instance=ExtResource("7_siyto")]
 top_level = true
 position = Vector2(7, 15)
