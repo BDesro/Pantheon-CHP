@@ -5,8 +5,9 @@ class_name Character
 @export var max_health: int = 100
 # Set initial current health to maximum
 @export var current_health = max_health
-@export var speed = 200 # Base movement speed (pixels/sec)
+@export var speed = 50 # Base movement speed (pixels/sec)
 @export var ascension_tier: int
+@export var ascension_threshold: int = 1 # Number of kills to ascend to next tier
 
 # Bounds for character position
 var min_x = -20 * 16
@@ -21,61 +22,54 @@ var control_state: ControlState = ControlState.Player
 # Saves the last y axis value of the character's velocity
 var prev_y = 0;
 
-# Define individual ability cooldowns
-@export var ability_cooldowns: Dictionary = {
-	"ability_1": 1.0,
-	"ability_2": 1.0,
-	"ability_3": 1.0,
-	"ability_4": 1.0,
-	"ability_5": 1.0,
-	"ability_6": 1.0
-}
+## Define individual ability cooldowns
+#@export var ability_cooldowns: Dictionary = {
+	#"ability_1": 1.0,
+	#"ability_2": 1.0,
+	#"ability_3": 1.0,
+	#"ability_4": 1.0,
+	#"ability_5": 1.0,
+	#"ability_6": 1.0
+#}
 
 # Track ability cooldown status
 var ability_on_cd: Dictionary = {}
 
-# Input-to-ability mapping (To be overridden in child nodes)
-var ability_bindings: Dictionary = {
-	"ability_1": "lmb",
-	"ability_2": "rmb",
-	"ability_3": "space",
-	"ability_4": "shift",
-	"ability_5": "e",
-	"ability_6": "q"
-}
+## Input-to-ability mapping (To be overridden in child nodes)
+#var ability_bindings: Dictionary = {
+	#"ability_1": "lmb",
+	#"ability_2": "rmb",
+	#"ability_3": "space",
+	#"ability_4": "shift",
+	#"ability_5": "e",
+	#"ability_6": "q"
+#}
 
 func _ready():
 	current_health = max_health # Ensure current health begins at max
 	
-	# Initialize cooldown states and timers for each ability
-	for ability_name in ability_cooldowns.keys():
-		ability_on_cd[ability_name] = false # Ensure all abilities start off cooldown
+	## Initialize cooldown states and timers for each ability
+	#for ability_name in ability_cooldowns.keys():
+		#ability_on_cd[ability_name] = false # Ensure all abilities start off cooldown
+		#
+		## Create a timer for each ability
+		#var timer = Timer.new()
+		#timer.name = ability_name + "_CDTimer"
+		#timer.wait_time = ability_cooldowns[ability_name]
+		#timer.one_shot = true
+		#
+		## Connect timer's timeout signal to the function
+		#timer.connect("timeout", Callable(self, "_on_cooldown_end"))
+		## Store the ability name in the timer's metadata for reference
+		#timer.set_meta("ability_name", ability_name)
 		
-		# Create a timer for each ability
-		var timer = Timer.new()
-		timer.name = ability_name + "_CDTimer"
-		timer.wait_time = ability_cooldowns[ability_name]
-		timer.one_shot = true
-		
-		# Connect timer's timeout signal to the function
-		timer.connect("timeout", Callable(self, "_on_cooldown_end"))
-		# Store the ability name in the timer's metadata for reference
-		timer.set_meta("ability_name", ability_name)
-		
-		add_child(timer)
-
-func set_control_state(new_state: ControlState):
-	control_state = new_state
+		#add_child(timer)
 
 func move_unit(desired_direction: Vector2):
 	velocity = desired_direction * speed
 	move_and_slide()
 
 func _process(delta):
-	if control_state == ControlState.AI:
-		print("Stuck in AI mode!")
-		handle_ai_movement(delta)
-		
 	if velocity.x < 0:
 		$AnimatedSprite2D.flip_h = true
 	if velocity.x > 0:
@@ -94,7 +88,3 @@ func _process(delta):
 		$AnimatedSprite2D.play("idle_up")
 	else:
 		$AnimatedSprite2D.play("idle_forward")
-
-func handle_ai_movement(_delta):
-	# Default AI movement: Stop moving (Implement Later)
-	move_unit(Vector2.ZERO)

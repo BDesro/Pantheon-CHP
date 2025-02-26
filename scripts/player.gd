@@ -1,25 +1,55 @@
-extends Node2D
-
 class_name Player
+extends BaseController
 
-# Reference to current character and camera
-var current_character: Character
+
 var camera: Camera2D
 
 func _ready():
-	# Initialize character and camera
-	current_character = $Character
-	camera = $Camera2D
+	super._ready()
+	print("Made it to player")
+	# Initialize camera and check ability bindings
+	setup_camera()
+	ensure_input_actions_exist()
 
 func _process(_delta):
+	position = cur_character.position
 	handle_input()
-	
-	if current_character:
-		camera.global_position = current_character.global_position
 
 func handle_input():
-	if not current_character:
+	if not cur_character:
 		return
 	
-	var input_direction = Input.get_vector("left", "right", "up", "down")
-	current_character.move_unit(input_direction)
+	# Basic movement
+	var input_direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
+	cur_character.move_unit(input_direction)
+	camera.position = cur_character.position
+	
+
+func setup_camera():
+	camera = $Camera2D
+	camera.make_current() # Camera follows player
+	camera.position_smoothing_enabled = true
+	camera.position_smoothing_speed = 10.0
+
+func ensure_input_actions_exist():
+	var actions = [
+		["move_right", KEY_D],
+		["move_left", KEY_A],
+		["move_up", KEY_W],
+		["move_down", KEY_S],
+		["primary", MOUSE_BUTTON_LEFT],
+		["secondary", MOUSE_BUTTON_RIGHT],
+		["dash_dodge", KEY_SPACE],
+		["offense_ability", KEY_SHIFT],
+		["defense_ability", KEY_E],
+		["all_in_ability", KEY_Q]
+	]
+
+	for pair in actions:
+		var action = pair[0]
+		var key = pair[1]
+		if not InputMap.has_action(action):
+			InputMap.add_action(action)
+			var event = InputEventKey.new()
+			event.keycode = key 
+			InputMap.action_add_event(action, event)

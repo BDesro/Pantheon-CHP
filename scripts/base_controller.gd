@@ -11,6 +11,7 @@ var character_index: int = 0 # Tracks current ascension tier
 # Calls load_character_hierarchy and sets the current character
 # to the one at index 0 in the array.
 func _ready():
+	print("made it to base controller")
 	load_character_hierarchy()
 	
 	cur_character = character_hierarchy[0].instantiate() as Character
@@ -30,6 +31,7 @@ func load_character_hierarchy():
 	# Access characters in folder
 	var char_folder = "res://scenes/Characters/"
 	var dir = DirAccess.open(char_folder)
+	print("Opened character folder")
 	
 	if dir:
 		var files = dir.get_files()
