@@ -127,4 +127,3 @@ tile_set = SubResource("TileSet_qlyl7")
 
 [node name="Player" parent="." instance=ExtResource("7_siyto")]
 top_level = true
-position = Vector2(7, 15)

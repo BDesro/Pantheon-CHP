@@ -12,7 +12,6 @@ func _ready():
 	ensure_input_actions_exist()
 
 func _process(_delta):
-	position = cur_character.position
 	handle_input()
 
 func handle_input():
@@ -22,7 +21,7 @@ func handle_input():
 	# Basic movement
 	var input_direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	cur_character.move_unit(input_direction)
-	camera.position = cur_character.position
+	camera.global_position = cur_character.global_position
 	
 
 func setup_camera():

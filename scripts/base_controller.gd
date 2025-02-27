@@ -11,7 +11,8 @@ var character_index: int = 0 # Tracks current ascension tier
 # Calls load_character_hierarchy and sets the current character
 # to the one at index 0 in the array.
 func _ready():
-	print("made it to base controller")
+	remove_child($Character)
+	
 	load_character_hierarchy()
 	
 	cur_character = character_hierarchy[0].instantiate() as Character

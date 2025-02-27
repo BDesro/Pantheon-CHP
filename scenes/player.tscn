@@ -7,3 +7,5 @@ script = ExtResource("1_5sjut")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(5.34, 5.34)
+
+[node name="Character" parent="." instance_placeholder="res://scenes/Characters/Character.tscn"]

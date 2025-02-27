@@ -69,7 +69,7 @@ func move_unit(desired_direction: Vector2):
 	velocity = desired_direction * speed
 	move_and_slide()
 
-func _process(delta):
+func _process(_delta):
 	if velocity.x < 0:
 		$AnimatedSprite2D.flip_h = true
 	if velocity.x > 0:
