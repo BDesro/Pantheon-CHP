@@ -1,6 +1,5 @@
-extends CharacterBody2D
-
 class_name Character
+extends CharacterBody2D
 
 @export var max_health: int = 100
 # Set initial current health to maximum

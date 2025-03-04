@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://cquuth2rbwspc" path="res://assets/SimpleSprites/SimpleSprites/PastoSuperior[2].png" id="4_pmbd4"]
 [ext_resource type="Texture2D" uid="uid://dotlj6evc3aob" path="res://assets/SimpleSprites/SimpleSprites/Tierra[1].png" id="5_dlf15"]
 [ext_resource type="Texture2D" uid="uid://vbueu20k0scm" path="res://assets/SimpleSprites/SimpleSprites/fullSimpleTileset.png" id="6_2oyix"]
-[ext_resource type="PackedScene" uid="uid://bhgrhv3frpheo" path="res://scenes/Player.tscn" id="7_siyto"]
+[ext_resource type="PackedScene" uid="uid://bhgrhv3frpheo" path="res://scenes/player.tscn" id="7_siyto"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_shtey"]
 resource_name = "grass"
