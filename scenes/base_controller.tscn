@@ -1,8 +1,9 @@
 [gd_scene load_steps=2 format=3 uid="uid://ck2thk1mb6bp0"]
 
-[ext_resource type="Script" path="res://scripts/base_controller.gd" id="1_lfqpv"]
+[ext_resource type="Script" path="res://scripts/base_controller.gd" id="1_pmvpi"]
 
 [node name="BaseController" type="Node2D"]
-script = ExtResource("1_lfqpv")
+top_level = true
+script = ExtResource("1_pmvpi")
 
 [node name="Character" parent="." instance_placeholder="res://scenes/Characters/Character.tscn"]

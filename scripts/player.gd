@@ -6,7 +6,7 @@ var camera: Camera2D
 
 func _ready():
 	super._ready()
-	print("Made it to player")
+	
 	# Initialize camera and check ability bindings
 	setup_camera()
 	ensure_input_actions_exist()
@@ -15,14 +15,13 @@ func _process(_delta):
 	handle_input()
 
 func handle_input():
-	if not cur_character:
+	if not character:
 		return
 	
 	# Basic movement
 	var input_direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
-	cur_character.move_unit(input_direction)
-	camera.global_position = cur_character.global_position
-	
+	character.move_unit(input_direction)
+	camera.global_position = character.global_position
 
 func setup_camera():
 	camera = $Camera2D

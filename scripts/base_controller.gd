@@ -1,10 +1,13 @@
 class_name BaseController
 extends Node2D
 
+signal move_requested(direction)
+signal ability_requested(ability_name)
+
 @export var controller_name: String 
-@export var cur_character: Character
 @export var character_hierarchy: Array[PackedScene] = [] # Ordered list of Character ascension tiers
 
+var character: Character
 var character_index: int = 0 # Tracks current ascension tier
 
 # ------------------------------------------------------------------------------
@@ -15,10 +18,10 @@ func _ready():
 	
 	load_character_hierarchy()
 	
-	cur_character = character_hierarchy[0].instantiate() as Character
-	if cur_character:
-		add_child(cur_character)
-		character_index = get_character_index(cur_character)
+	character = character_hierarchy[0].instantiate() as Character
+	if character:
+		add_child(character)
+		character_index = get_character_index(character)
 
 # ------------------------------------------------------------------------------
 # Populates the character hierarchy with all available Characters
@@ -30,9 +33,8 @@ func _ready():
 # Fully encapsulated from BaseController implementations
 func load_character_hierarchy():
 	# Access characters in folder
-	var char_folder = "res://scenes/Characters/"
+	var char_folder = "res://scenes/characters/"
 	var dir = DirAccess.open(char_folder)
-	print("Opened character folder")
 	
 	if dir:
 		var files = dir.get_files()
@@ -62,10 +64,10 @@ func load_character_hierarchy():
 #  character hierarchy. 
 #
 # (MAY SIMPLIFY LATER)
-func get_character_index(character: Character) -> int:
+func get_character_index(chr: Character) -> int:
 	for i in range(character_hierarchy.size()):
 		var temp_instance = character_hierarchy[i].instantiate() as Character
-		if temp_instance and temp_instance.ascension_tier == character.ascension_tier:
+		if temp_instance and temp_instance.ascension_tier == chr.ascension_tier:
 			temp_instance.queue_free()
 			return i
 		temp_instance.queue_free()
@@ -79,24 +81,24 @@ func swap_character(new_index: int):
 	if new_index < 0 or new_index >= character_hierarchy.size():
 		return # Out of bounds protection
 		
-	if cur_character:
-		remove_child(cur_character)
-		cur_character.queue_free()
+	if character:
+		remove_child(character)
+		character.queue_free()
 	
 	character_index = new_index
-	cur_character = character_hierarchy[character_index].instantiate() as Character
-	add_child(cur_character)
+	character = character_hierarchy[character_index].instantiate() as Character
+	add_child(character)
 
 # ------------------------------------------------------------------------------
 # Sets current character to the next highest in the hierarchy (if able)
 func ascend():
 	if character_index < character_hierarchy.size() - 1:
 		swap_character(character_index + 1)
-		# print(controller_name, " Ascended to: ", cur_character.name)
+		# print(controller_name, " Ascended to: ", character.name)
 
 # ------------------------------------------------------------------------------
 # Sets current character to the next lowest in the hierarchy (if able)
 func descend():
 	if character_index > 0:
 		swap_character(character_index - 1)
-		# print(controller_name, " Descended to:", cur_character.name)
+		# print(controller_name, " Descended to:", character.name)

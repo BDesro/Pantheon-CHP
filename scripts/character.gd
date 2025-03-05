@@ -68,6 +68,12 @@ func move_unit(desired_direction: Vector2):
 	velocity = desired_direction * speed
 	move_and_slide()
 
+func use_ability(ability_name: String):
+	if has_method(ability_name):
+		call(ability_name)
+	else:
+		print("Ability function '" + ability_name + "' does not exist")
+
 func _process(_delta):
 	if velocity.x < 0:
 		$AnimatedSprite2D.flip_h = true
