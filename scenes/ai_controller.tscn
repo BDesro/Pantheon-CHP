@@ -1,11 +1,11 @@
 [gd_scene load_steps=3 format=3 uid="uid://wkfi7fle6xmf"]
 
-[ext_resource type="Script" path="res://scripts/ai_controller.gd" id="1_ydsw3"]
+[ext_resource type="Script" path="res://scripts/state_machine.gd" id="1_v7ahj"]
 [ext_resource type="PackedScene" uid="uid://b8t51qj22uqqy" path="res://scenes/characters/character.tscn" id="2_r3skh"]
 
-[node name="AI Controller" type="Node2D"]
+[node name="AIController" type="Node2D"]
 top_level = true
-script = ExtResource("1_ydsw3")
+script = ExtResource("1_v7ahj")
 metadata/_edit_group_ = true
 
 [node name="Character" parent="." instance=ExtResource("2_r3skh")]
