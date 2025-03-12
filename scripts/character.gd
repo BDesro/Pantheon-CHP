@@ -5,8 +5,13 @@ extends CharacterBody2D
 # Set initial current health to maximum
 @export var current_health = max_health
 @export var speed = 50 # Base movement speed (pixels/sec)
-@export var ascension_tier: int
+
+@export var ascension_tier: int = 0
 @export var ascension_threshold: int = 1 # Number of kills to ascend to next tier
+
+func get_ascension_tier() -> int:
+	return ascension_tier
+
 
 # Bounds for character position
 var min_x = -20 * 16

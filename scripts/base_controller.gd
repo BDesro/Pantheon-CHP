@@ -18,8 +18,21 @@ func _ready():
 	
 	load_character_hierarchy()
 	
-	character = character_hierarchy[0].instantiate() as Character
-	if character:
+	if CharacterManager.characters.is_empty():
+		CharacterManager.characters_loaded.connect(_on_characters_loaded)
+	else:
+		var new_character = CharacterManager.characters[0]
+		#character = character_hierarchy[0].instantiate() as Character
+		if new_character:
+			character = new_character.instantiate()
+			add_child(character)
+			character_index = get_character_index(character)
+	
+func _on_characters_loaded():
+	var new_character = CharacterManager.characters[0]
+	#character = character_hierarchy[0].instantiate() as Character
+	if new_character:
+		character = new_character.instantiate()
 		add_child(character)
 		character_index = get_character_index(character)
 
