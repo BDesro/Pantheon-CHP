@@ -1,117 +1,66 @@
 class_name BaseController
 extends Node2D
 
-signal move_requested(direction)
-signal ability_requested(ability_name)
-
 @export var controller_name: String 
-@export var character_hierarchy: Array[PackedScene] = [] # Ordered list of Character ascension tiers
 
-var character: Character
-var character_index: int = 0 # Tracks current ascension tier
+@export var character: Character
 
 # ------------------------------------------------------------------------------
 # Calls load_character_hierarchy and sets the current character
 # to the one at index 0 in the array.
 func _ready():
-	remove_child($Character)
-	
-	load_character_hierarchy()
+	if character:
+		remove_child(character)
+		character.queue_free()
 	
 	if CharacterManager.characters.is_empty():
 		CharacterManager.characters_loaded.connect(_on_characters_loaded)
 	else:
 		var new_character = CharacterManager.characters[0]
-		#character = character_hierarchy[0].instantiate() as Character
 		if new_character:
 			character = new_character.instantiate()
 			add_child(character)
-			character_index = get_character_index(character)
 	
 func _on_characters_loaded():
 	var new_character = CharacterManager.characters[0]
-	#character = character_hierarchy[0].instantiate() as Character
 	if new_character:
 		character = new_character.instantiate()
 		add_child(character)
-		character_index = get_character_index(character)
-
-# ------------------------------------------------------------------------------
-# Populates the character hierarchy with all available Characters
-#  listed in the Characters folder. 
-#
-# Also makes sure the Characters are properly ordered by their
-#  ascension tiers for smooth ascend/descend calls
-# 
-# Fully encapsulated from BaseController implementations
-func load_character_hierarchy():
-	# Access characters in folder
-	var char_folder = "res://scenes/characters/"
-	var dir = DirAccess.open(char_folder)
-	
-	if dir:
-		var files = dir.get_files()
-		var temp_list = []
-		
-		# load characters as PackedScenes while populating the temporary
-		# list so they can be sorted.
-		for file in files:
-			var scene_path = char_folder + file
-			var packed_scene = load(scene_path) as PackedScene
-			if packed_scene:
-				var temp_instance = packed_scene.instantiate() as Character
-				if temp_instance:
-					temp_list.append({"scene": packed_scene, "tier": temp_instance.ascension_tier})
-					temp_instance.queue_free()
-		
-		# sort by ascension tier
-		temp_list.sort_custom(func(a,b): return a["tier"] < b["tier"])
-		
-		# store Character scenes in sorted order as PackedScenes
-		for entry in temp_list:
-			character_hierarchy.append(entry["scene"])
-
-# ------------------------------------------------------------------------------
-# Returns the index of the given Character by matching its
-#  ascension tier to that of its designated spot in the 
-#  character hierarchy. 
-#
-# (MAY SIMPLIFY LATER)
-func get_character_index(chr: Character) -> int:
-	for i in range(character_hierarchy.size()):
-		var temp_instance = character_hierarchy[i].instantiate() as Character
-		if temp_instance and temp_instance.ascension_tier == chr.ascension_tier:
-			temp_instance.queue_free()
-			return i
-		temp_instance.queue_free()
-	return 0 # Defaults to first character
 
 # ------------------------------------------------------------------------------
 # Used by ascend() and descend() to change the character
 #  assigned to this controller based on the current index
 #  in the hierarchy
-func swap_character(new_index: int):
-	if new_index < 0 or new_index >= character_hierarchy.size():
-		return # Out of bounds protection
-		
-	if character:
-		remove_child(character)
-		character.queue_free()
+func swap_character(tier: int):
+	if not CharacterManager.characters.has(tier):
+		print("ERROR: No character found for tier", tier)
+		return
 	
-	character_index = new_index
-	character = character_hierarchy[character_index].instantiate() as Character
-	add_child(character)
+	var new_character_scene = CharacterManager.characters[tier]
+	
+	var new_character = null
+	if new_character_scene:
+		new_character = new_character_scene.instantiate()
+		
+		if character:
+			new_character.global_position = character.global_position
+			character.queue_free()
+		
+		character = new_character
+		add_child(character)
+		
+		print(controller_name, "Character Swap successful!")
 
 # ------------------------------------------------------------------------------
 # Sets current character to the next highest in the hierarchy (if able)
 func ascend():
-	if character_index < character_hierarchy.size() - 1:
-		swap_character(character_index + 1)
-		# print(controller_name, " Ascended to: ", character.name)
+	var next_tier = character.ascension_tier + 1
+	if CharacterManager.characters.has(next_tier):
+		swap_character(next_tier)
 
 # ------------------------------------------------------------------------------
 # Sets current character to the next lowest in the hierarchy (if able)
 func descend():
-	if character_index > 0:
-		swap_character(character_index - 1)
-		# print(controller_name, " Descended to:", character.name)
+	var prev_tier = character.ascension_tier - 1
+	if CharacterManager.characters.has(prev_tier):
+		swap_character(prev_tier)
