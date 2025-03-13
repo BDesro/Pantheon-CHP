@@ -22,6 +22,9 @@ func handle_input():
 	var input_direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	character.move_unit(input_direction)
 	camera.global_position = character.global_position
+	
+	if Input.is_action_just_pressed("primary"):
+		character.use_ability("primary")
 
 func setup_camera():
 	camera = $Camera2D

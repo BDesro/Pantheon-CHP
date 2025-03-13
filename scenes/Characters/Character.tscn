@@ -160,5 +160,3 @@ autoplay = "idle_forward"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -7)
 shape = SubResource("CapsuleShape2D_3rjh8")
-
-[node name="Timer" type="Timer" parent="."]

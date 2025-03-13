@@ -44,7 +44,7 @@ func finalize_character_load():
 					var instance = scene.instantiate()
 					
 					if instance.has_method("get_ascension_tier"):
-						var tier = instance.ascension_tier
+						var tier = instance.get_ascension_tier()
 						characters[tier] = scene
 					
 					instance.queue_free()
