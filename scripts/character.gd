@@ -14,6 +14,12 @@ var abilities: Dictionary = {
 }
 var ability_cooldowns: Dictionary = {}
 
+@onready var sprite = $Sprite
+@onready var animation_player = $AnimationPlayer
+@onready var attack_area = $AttackArea
+@onready var hurtbox = $Hurtbox
+@onready var collision_shape = $CollisionShape2D
+
 func _ready():
 	for ability_name in abilities.keys():
 		ability_cooldowns[ability_name] = Timer.new()
@@ -49,23 +55,23 @@ func _process(_delta):
 
 func handle_animations():
 	if velocity.x < 0:
-		$AnimatedSprite2D.flip_h = true
+		sprite.flip_h = true
 	if velocity.x > 0:
-		$AnimatedSprite2D.flip_h = false
+		sprite.flip_h = false
 	
 	if velocity.x != 0:
-		$AnimatedSprite2D.play("walk_side")
+		sprite.play("walk_side")
 		prev_y = 0
 	elif velocity.y > 0:
-		$AnimatedSprite2D.play("walk_forward")
+		sprite.play("walk_forward")
 		prev_y = 1
 	elif velocity.y < 0:
-		$AnimatedSprite2D.play("walk_up")
+		sprite.play("walk_up")
 		prev_y = -1
 	elif prev_y == -1:
-		$AnimatedSprite2D.play("idle_up")
+		sprite.play("idle_up")
 	else:
-		$AnimatedSprite2D.play("idle_forward")
+		sprite.play("idle_forward")
 
 func get_ascension_tier() -> int:
 	return ascension_tier
