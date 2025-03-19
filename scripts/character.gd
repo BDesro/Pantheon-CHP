@@ -42,11 +42,15 @@ func _on_cooldown_end(ability_name: String):
 	print(ability_name + " is off cooldown!")
 
 func primary():
-	print("Primary used")
+	print("primary used")
 
 func move_unit(desired_direction: Vector2):
 	velocity = desired_direction * speed
 	move_and_slide()
+
+func die():
+	collision_shape.set_deferred("disabled", true) # Disables collision on death
+	queue_free()
 
 # Saves the last y axis value of the character's velocity
 var prev_y = 0;
@@ -75,3 +79,18 @@ func handle_animations():
 
 func get_ascension_tier() -> int:
 	return ascension_tier
+
+
+func _on_hurtbox_body_entered(body: Node2D) -> void:
+	if body.is_in_group("enemy_attacks"):
+		take_damage(body.damage)
+
+func take_damage(amount: int):
+	current_health -= amount
+	print("Character took", amount, "damage! Remaining HP:", current_health)
+	if current_health <= 0:
+		die()
+
+func _on_attack_area_body_entered(body: Node2D) -> void:
+	if body.is_in_group("enemies"):
+		body.take_damage(30)
