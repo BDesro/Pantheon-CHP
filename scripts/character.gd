@@ -8,6 +8,9 @@ signal ability_requested(ability_name: String)
 @export var ascension_tier: int = 0
 @export var ascension_threshold: int = 1 # Number of kills to ascend to next tier
 
+enum Team { RED = 1, BLUE = 2 }
+var team_id = Team.RED # Default team value to be changed upon instantiation
+
 var current_health = max_health
 var abilities: Dictionary = {
 	"primary": {"cooldown": 1.5}
@@ -27,6 +30,8 @@ func _ready():
 		ability_cooldowns[ability_name].one_shot = true
 		ability_cooldowns[ability_name].connect("timeout", Callable(self, "_on_cooldown_end").bind(ability_name))
 		add_child(ability_cooldowns[ability_name])
+	
+	GameManager.register_unit(self, team_id)
 
 func use_ability(ability_name: String):
 	if ability_name in abilities:
@@ -80,6 +85,10 @@ func handle_animations():
 func get_ascension_tier() -> int:
 	return ascension_tier
 
+# This will need to be played with to make it work
+func _on_death(killer):
+	GameManager.register_kill(killer, self)
+	GameManager.deregister_unit(self)
 
 func _on_hurtbox_body_entered(body: Node2D) -> void:
 	if body.is_in_group("enemy_attacks"):
