@@ -50,6 +50,10 @@ func primary():
 	print("primary used")
 
 func move_unit(desired_direction: Vector2):
+	# Normalize diagonal movement
+	if desired_direction.length() > 0:
+		desired_direction = desired_direction.normalized()
+	
 	velocity = desired_direction * speed
 	move_and_slide()
 

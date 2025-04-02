@@ -18,8 +18,29 @@ func handle_input():
 	if not character:
 		return
 	
+	# Point character toward mouse
+	var mouse_position = get_global_mouse_position()
+	var direction = (mouse_position - character.global_position).normalized()
+	
+	character.rotation = direction.angle() + PI / 2
+	
+	#var right_direction = direction.rotated(PI / 2)  # Perpendicular for strafing
+#
+	## Get input vector
+	#var input_vector = Vector2.ZERO
+	#if Input.is_action_pressed("move_forward"):  # "W" moves toward the mouse
+		#input_vector += direction
+	#if Input.is_action_pressed("move_backward"):  # "S" moves opposite the mouse
+		#input_vector -= direction
+	#if Input.is_action_pressed("move_left"):  # "A" strafes left
+		#input_vector -= right_direction
+	#if Input.is_action_pressed("move_right"):  # "D" strafes right
+		#input_vector += right_direction
+	#
+	#character.move_unit(input_vector)
+	
 	# Basic movement
-	var input_direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
+	var input_direction = Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
 	character.move_unit(input_direction)
 	camera.global_position = character.global_position
 	
@@ -36,8 +57,8 @@ func ensure_input_actions_exist():
 	var actions = [
 		["move_right", KEY_D],
 		["move_left", KEY_A],
-		["move_up", KEY_W],
-		["move_down", KEY_S],
+		["move_forward", KEY_W],
+		["move_backward", KEY_S],
 		["primary", MOUSE_BUTTON_LEFT],
 		["secondary", MOUSE_BUTTON_RIGHT],
 		["dash_dodge", KEY_SPACE],
