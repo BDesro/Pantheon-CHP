@@ -1,44 +1,109 @@
+class_name Character
 extends CharacterBody2D
 
+signal ability_requested(ability_name: String)
+
 @export var max_health: int = 100
-@export var speed = 200 # Base movement speed (pixels/sec)
+@export var speed = 50 # Base movement speed (pixels/sec)
+@export var ascension_tier: int = 0
+@export var ascension_threshold: int = 1 # Number of kills to ascend to next tier
 
-# Define individual ability cooldowns
-@export var ability_cooldowns: Dictionary = {
-	"LMB":    0.0,
-	"RMB":    0.0,
-	"Space":  0.0,
-	"LSHIFT": 0.0,
-	"E":      0.0,
-	"Q":      0.0
-}
+enum Team { RED = 1, BLUE = 2 }
+var team_id = Team.RED # Default team value to be changed upon instantiation
 
-# Track ability cooldown status
-var ability_on_cd: Dictionary = {}
-
-# Set initial current health to maximum
 var current_health = max_health
+var abilities: Dictionary = {
+	"primary": {"cooldown": 1.5}
+}
+var ability_cooldowns: Dictionary = {}
+
+@onready var sprite = $Sprite
+@onready var animation_player = $AnimationPlayer
+@onready var attack_area = $AttackArea
+@onready var hurtbox = $Hurtbox
+@onready var collision_shape = $CollisionShape2D
 
 func _ready():
-	current_health = max_health # Ensure current health begins at max
+	for ability_name in abilities.keys():
+		ability_cooldowns[ability_name] = Timer.new()
+		ability_cooldowns[ability_name].wait_time = abilities[ability_name]["cooldown"]
+		ability_cooldowns[ability_name].one_shot = true
+		ability_cooldowns[ability_name].connect("timeout", Callable(self, "_on_cooldown_end").bind(ability_name))
+		add_child(ability_cooldowns[ability_name])
 	
-	# Initialize cooldown states and timers for each ability
-	for ability_name in ability_cooldowns.keys():
-		ability_on_cd[ability_name] = false # Ensure all abilities start off cooldown
-		
-		# Create a timer for each ability
-		var timer = Timer.new()
-		timer.name = ability_name + "_CDTimer"
-		timer.wait_time = ability_cooldowns[ability_name]
-		timer.one_shot = true
-		
-		# Connect timer's timeout signal to the function
-		timer.set_meta("ability_name", ability_name)
-		timer.connect("timeout", Callable(self, "_on_cooldown_end"))
-		
-		add_child(timer)
+	GameManager.register_unit(self, team_id)
+
+func use_ability(ability_name: String):
+	if ability_name in abilities:
+		if ability_cooldowns[ability_name].is_stopped():
+			call(ability_name)
+			ability_cooldowns[ability_name].start()
+		else:
+			print(ability_name + " is on cooldown!")
+	else:
+		print("Ability '" + ability_name + "' not found!")
+
+func _on_cooldown_end(ability_name: String):
+	print(ability_name + " is off cooldown!")
+
+func primary():
+	print("primary used")
+
+func move_unit(desired_direction: Vector2):
+	# Normalize diagonal movement
+	if desired_direction.length() > 0:
+		desired_direction = desired_direction.normalized()
 	
-func _physics_process(_delta):
-	var input_direction = Input.get_vector("left", "right", "up", "down")
-	velocity = input_direction * speed;
+	velocity = desired_direction * speed
 	move_and_slide()
+
+func die():
+	collision_shape.set_deferred("disabled", true) # Disables collision on death
+	queue_free()
+
+# Saves the last y axis value of the character's velocity
+var prev_y = 0;
+func _process(_delta):
+	handle_animations()
+
+func handle_animations():
+	if velocity.x < 0:
+		sprite.flip_h = true
+	if velocity.x > 0:
+		sprite.flip_h = false
+	
+	if velocity.x != 0:
+		sprite.play("walk_side")
+		prev_y = 0
+	elif velocity.y > 0:
+		sprite.play("walk_forward")
+		prev_y = 1
+	elif velocity.y < 0:
+		sprite.play("walk_up")
+		prev_y = -1
+	elif prev_y == -1:
+		sprite.play("idle_up")
+	else:
+		sprite.play("idle_forward")
+
+func get_ascension_tier() -> int:
+	return ascension_tier
+
+# This will need to be played with to make it work
+func _on_death(killer):
+	GameManager.register_kill(killer, self)
+	GameManager.deregister_unit(self)
+
+func _on_hurtbox_body_entered(body: Node2D) -> void:
+	if body.is_in_group("enemy_attacks"):
+		take_damage(body.damage)
+
+func take_damage(amount: int):
+	current_health -= amount
+	print("Character took", amount, "damage! Remaining HP:", current_health)
+	if current_health <= 0:
+		die()
+
+func _on_attack_area_body_entered(body: Node2D) -> void:
+	if body.is_in_group("enemies"):
+		body.take_damage(30)
