@@ -129,4 +129,5 @@ tile_set = SubResource("TileSet_qlyl7")
 [node name="Player" parent="." instance=ExtResource("7_siyto")]
 
 [node name="AI Controller" parent="." instance=ExtResource("8_snifb")]
+visible = false
 position = Vector2(-35, -9)
