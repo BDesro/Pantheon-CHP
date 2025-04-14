@@ -1,7 +1,7 @@
 [gd_scene load_steps=16 format=3 uid="uid://bknghk8cirprn"]
 
 [ext_resource type="PackedScene" uid="uid://b8t51qj22uqqy" path="res://scenes/characters/character.tscn" id="1_xnsdv"]
-[ext_resource type="Script" path="res://scenes/characters/soldier.gd" id="2_vhpbb"]
+[ext_resource type="Script" path="res://scripts/soldier.gd" id="2_vhpbb"]
 [ext_resource type="Texture2D" uid="uid://ddlexxqbx2qk6" path="res://assets/Pantheon_Soldier.png" id="3_sl41k"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ytu6a"]

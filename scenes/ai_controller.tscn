@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://wkfi7fle6xmf"]
 
 [ext_resource type="Script" path="res://scripts/state_machine.gd" id="1_v7ahj"]
-[ext_resource type="PackedScene" uid="uid://b8t51qj22uqqy" path="res://scenes/characters/Character.tscn" id="2_r3skh"]
+[ext_resource type="PackedScene" uid="uid://b8t51qj22uqqy" path="res://scenes/characters/character.tscn" id="2_r3skh"]
 
 [node name="AIController" type="Node2D"]
 top_level = true
