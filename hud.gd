@@ -21,9 +21,14 @@ func show_game_over():
 func update_score(score):
 	$ScoreLabel.text = str(score)
 
-func _on_start_button_pressed():
-	$StartButton.hide()
-	start_game.emit()
+func _on_health_down_button_pressed():
+	$HealthBar.set_health($HealthBar.front_bar.value - 20)
+
+func _on_health_up_button_pressed():
+	$HealthBar.set_health($HealthBar.front_bar.value + 20)
 
 func _on_message_timer_timeout():
+	$Message.hide()
+
+func _process(delta: float) -> void:
 	$Message.hide()

@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://ccelestqr2bns"]
+[gd_scene load_steps=4 format=3 uid="uid://ccelestqr2bns"]
 
 [ext_resource type="Script" path="res://hud.gd" id="1_g21ws"]
 [ext_resource type="FontFile" uid="uid://obg2py2apxig" path="res://assets/Orange Kid.otf" id="2_hqpr8"]
+[ext_resource type="PackedScene" uid="uid://q5uf5fpgjgxu" path="res://scenes/health_bar.tscn" id="3_2fm3o"]
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource("1_g21ws")
@@ -43,18 +44,43 @@ autowrap_mode = 2
 wait_time = 2.0
 one_shot = true
 
-[node name="StartButton" type="Button" parent="."]
+[node name="HealthBar" parent="." instance=ExtResource("3_2fm3o")]
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -100.0
-offset_top = -100.0
-offset_right = 100.0
+offset_left = -168.0
+offset_top = -48.0
+offset_right = 168.0
+offset_bottom = -32.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_fonts/font = ExtResource("2_hqpr8")
-theme_override_font_sizes/font_size = 64
-text = "Start
-"
+
+[node name="HealthDown" type="Button" parent="."]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 244.0
+offset_top = -64.0
+offset_right = 394.0
+offset_bottom = -14.0
+grow_vertical = 0
+text = "-20 Health"
+
+[node name="HealthUp" type="Button" parent="."]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -395.0
+offset_top = -62.0
+offset_right = -245.0
+offset_bottom = -12.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "+20 Health"
+
+[connection signal="pressed" from="HealthDown" to="." method="_on_health_down_button_pressed"]
+[connection signal="pressed" from="HealthUp" to="." method="_on_health_up_button_pressed"]

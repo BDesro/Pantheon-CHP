@@ -1,17 +1,56 @@
-[gd_scene load_steps=3 format=3 uid="uid://q5uf5fpgjgxu"]
+[gd_scene load_steps=6 format=3 uid="uid://q5uf5fpgjgxu"]
+
+[ext_resource type="Script" path="res://scripts/health_bar.gd" id="1_ysqmn"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tvcpm"]
+bg_color = Color(0.0784314, 0.0705882, 0.0627451, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0ftgf"]
+bg_color = Color(0.520962, 0.508191, 0.0513808, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0, 0, 0, 1)
+border_blend = true
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nlirt"]
-bg_color = Color(0.0800064, 0.0713374, 0.0624354, 1)
+bg_color = Color(0.0784314, 0.0705882, 0.0627451, 0)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_myl4r"]
 bg_color = Color(4.01892e-06, 0.564448, 0.19393, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0, 0, 0, 1)
+border_blend = true
 
-[node name="HealthBar" type="ProgressBar"]
+[node name="HealthBar" type="Control"]
 top_level = true
+layout_mode = 3
+anchors_preset = 0
 offset_left = -160.0
-offset_top = -9.0
-offset_right = 160.0
-offset_bottom = 11.0
+offset_top = -8.0
+offset_right = 176.0
+offset_bottom = 16.0
+script = ExtResource("1_ysqmn")
+metadata/_edit_group_ = true
+
+[node name="YellowBar" type="ProgressBar" parent="."]
+layout_mode = 0
+offset_right = 336.0
+offset_bottom = 24.0
+theme_override_styles/background = SubResource("StyleBoxFlat_tvcpm")
+theme_override_styles/fill = SubResource("StyleBoxFlat_0ftgf")
+step = 1.0
+value = 100.0
+show_percentage = false
+
+[node name="GreenBar" type="ProgressBar" parent="."]
+layout_mode = 0
+offset_right = 336.0
+offset_bottom = 24.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_constants/outline_size = 2
 theme_override_font_sizes/font_size = 5
