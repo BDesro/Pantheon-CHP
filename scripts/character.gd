@@ -103,7 +103,7 @@ func _on_hurtbox_body_entered(body: Node2D) -> void:
 		take_damage(body.damage)
 
 func take_damage(amount: int):
-	current_health -= amount
+	current_health = clamp(current_health - amount, 0, max_health)
 	print("Character took", amount, "damage! Remaining HP:", current_health)
 	if current_health <= 0:
 		die()
