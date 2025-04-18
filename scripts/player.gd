@@ -1,7 +1,6 @@
 class_name Player
 extends BaseController
 
-
 var camera: Camera2D
 
 func _ready():

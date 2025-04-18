@@ -22,8 +22,12 @@ var ability_cooldowns: Dictionary = {}
 @onready var attack_area = $AttackArea
 @onready var hurtbox = $Hurtbox
 @onready var collision_shape = $CollisionShape2D
+@onready var health_bar = $HealthBar
 
 func _ready():
+	if get_parent().has_method("setup_camera"):
+		health_bar.hide()
+	
 	for ability_name in abilities.keys():
 		ability_cooldowns[ability_name] = Timer.new()
 		ability_cooldowns[ability_name].wait_time = abilities[ability_name]["cooldown"]
