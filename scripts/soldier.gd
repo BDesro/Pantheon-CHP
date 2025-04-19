@@ -1,6 +1,10 @@
 extends Character
 class_name Soldier
 
+func _ready():
+	max_health = 200
+	super._ready()
+	
 func _process(_delta):
 	handle_animations()
 

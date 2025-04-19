@@ -5,27 +5,26 @@ extends Node2D
 
 @export var character: Character
 
-# ------------------------------------------------------------------------------
-# Calls load_character_hierarchy and sets the current character
-# to the one at index 0 in the array.
-func _ready():
+signal fully_initialized(character)
+
+func _init():
 	if character:
 		remove_child(character)
 		character.queue_free()
 	
-	if CharacterManager.characters.is_empty():
-		CharacterManager.characters_loaded.connect(_on_characters_loaded)
-	else:
-		var new_character = CharacterManager.characters[0]
-		if new_character:
-			character = new_character.instantiate()
-			add_child(character)
+	CharacterManager.characters_loaded.connect(_on_characters_loaded)
+# ------------------------------------------------------------------------------
+# Calls load_character_hierarchy and sets the current character
+# to the one at index 0 in the array.
+
 	
 func _on_characters_loaded():
 	var new_character = CharacterManager.characters[0]
 	if new_character:
 		character = new_character.instantiate()
+		print("Parent ready, character =", character)
 		add_child(character)
+		emit_signal("fully_initialized", character)
 
 # ------------------------------------------------------------------------------
 # Used by ascend() and descend() to change the character

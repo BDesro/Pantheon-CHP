@@ -182,7 +182,6 @@ position = Vector2(0, -7)
 shape = SubResource("CapsuleShape2D_ykg02")
 
 [node name="AttackArea" type="Area2D" parent="."]
-monitoring = false
 monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
@@ -201,5 +200,6 @@ remote_path = NodePath("../HealthBar")
 update_rotation = false
 update_scale = false
 
+[connection signal="health_changed" from="." to="HealthBar" method="set_health"]
 [connection signal="body_entered" from="Hurtbox" to="." method="_on_hurtbox_body_entered"]
 [connection signal="body_entered" from="AttackArea" to="." method="_on_attack_area_body_entered"]

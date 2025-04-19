@@ -2,9 +2,16 @@ extends Node2D
 
 @onready var front_bar: ProgressBar = $GreenBar
 @onready var back_bar: ProgressBar = $YellowBar
+@onready var character:= get_parent() as Character
 
 var delay_timer := 0.0
 var damage_lerp_speed := 0.5 # Higher = yellow catches up faster
+
+func _ready():
+	if character:
+		front_bar.max_value = character.max_health
+		front_bar.value = character.current_health
+		back_bar.max_value = front_bar.max_value
 
 func set_health(new_health: float):
 	front_bar.value = clamp(new_health, 0, 100)

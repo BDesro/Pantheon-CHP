@@ -3,6 +3,19 @@ extends CanvasLayer
 # Notifies the Main node that the button has been pressed
 signal start_game
 
+@onready var player = get_parent() as Player
+@onready var health_bar = $HealthBar
+
+func _ready():
+	if player:
+		if player.character:
+			health_bar.front_bar.max_value = player.character.max_health
+		#else:
+			#player.character_loaded.connect(_on_character_loaded);
+
+func _on_character_loaded():
+	health_bar.front_bar.max_value = player.character.max_health
+
 # Temporarily shows a message on the screen
 func show_message(text):
 	$Message.text = text
