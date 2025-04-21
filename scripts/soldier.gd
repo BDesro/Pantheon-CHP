@@ -2,7 +2,7 @@ extends Character
 class_name Soldier
 
 func _ready():
-	max_health = 200
+	max_health = 100
 	super._ready()
 	
 func _process(_delta):

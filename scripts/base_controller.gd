@@ -5,14 +5,17 @@ extends Node2D
 
 @export var character: Character
 
-signal fully_initialized(character)
+signal fully_initialized()
 
-func _init():
+func _ready():
 	if character:
 		remove_child(character)
 		character.queue_free()
 	
-	CharacterManager.characters_loaded.connect(_on_characters_loaded)
+	if CharacterManager.characters.size() > 0:
+		_on_characters_loaded()
+	else:
+		CharacterManager.characters_loaded.connect(_on_characters_loaded)
 # ------------------------------------------------------------------------------
 # Calls load_character_hierarchy and sets the current character
 # to the one at index 0 in the array.
@@ -24,7 +27,7 @@ func _on_characters_loaded():
 		character = new_character.instantiate()
 		print("Parent ready, character =", character)
 		add_child(character)
-		emit_signal("fully_initialized", character)
+		fully_initialized.emit()
 
 # ------------------------------------------------------------------------------
 # Used by ascend() and descend() to change the character

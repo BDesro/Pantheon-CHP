@@ -14,18 +14,28 @@ func load_character_scenes():
 	if dir:
 		dir.list_dir_begin()
 		var file_name = dir.get_next()
+		var paths_to_check = []
 		
 		while file_name != "":
 			if file_name.ends_with(".tscn"):
 				var scene_path = CHARACTERS_PATH + file_name
-				
 				ResourceLoader.load_threaded_request(scene_path)
+				paths_to_check.append(scene_path)
 			
 			file_name = dir.get_next()
 		
-		await get_tree().process_frame
+		# Wait until all loads are complete
+		while true:
+			var all_loaded = true
+			for path in paths_to_check:
+				if ResourceLoader.load_threaded_get_status(path) != ResourceLoader.THREAD_LOAD_LOADED:
+					all_loaded = false
+					break
+			if all_loaded:
+				break
+			await get_tree().process_frame
+		
 		finalize_character_load()
-	
 	else:
 		push_error("Error: Could not access character directory!")
 

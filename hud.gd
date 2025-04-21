@@ -10,11 +10,12 @@ func _ready():
 	if player:
 		if player.character:
 			health_bar.front_bar.max_value = player.character.max_health
-		#else:
-			#player.character_loaded.connect(_on_character_loaded);
+		else:
+			player.connect("character_loaded", Callable(self, "_on_character_loaded"))
 
-func _on_character_loaded():
-	health_bar.front_bar.max_value = player.character.max_health
+func _on_character_loaded(max_health):
+	health_bar.set_max_health(max_health)
+	print("Max Health: ", health_bar.front_bar.max_value)
 
 # Temporarily shows a message on the screen
 func show_message(text):
