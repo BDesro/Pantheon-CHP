@@ -25,7 +25,6 @@ func _on_characters_loaded():
 	var new_character = CharacterManager.characters[0]
 	if new_character:
 		character = new_character.instantiate()
-		print("Parent ready, character =", character)
 		add_child(character)
 		fully_initialized.emit()
 

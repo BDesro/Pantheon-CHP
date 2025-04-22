@@ -15,7 +15,6 @@ func _ready():
 
 func _on_character_loaded(max_health):
 	health_bar.set_max_health(max_health)
-	print("Max Health: ", health_bar.front_bar.max_value)
 
 # Temporarily shows a message on the screen
 func show_message(text):

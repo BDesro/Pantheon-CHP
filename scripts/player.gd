@@ -17,11 +17,9 @@ func _on_character_fully_initialized():
 	_post_ready()
 
 func _post_ready():
-	print("Child ready, character =", character)
 	#get_character_health()
 	if character:
 		character_loaded.emit(character.max_health)
-		print("character_loaded emitted with max health:", character.max_health)
 
 func _process(_delta):
 	handle_input()

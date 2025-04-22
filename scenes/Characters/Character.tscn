@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://b8t51qj22uqqy"]
+[gd_scene load_steps=24 format=3 uid="uid://b8t51qj22uqqy"]
 
 [ext_resource type="Script" path="res://scripts/character.gd" id="1_ak385"]
 [ext_resource type="Texture2D" uid="uid://bs0tg8kbef8ov" path="res://assets/Prototype Character Assets/Prototype_Character/Prototype_Character.png" id="2_1ejny"]
@@ -144,18 +144,16 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_uop4u"]
-
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3rjh8"]
 radius = 4.0
 height = 14.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ykg02"]
-radius = 9.52381
-height = 30.4762
+radius = 4.0
+height = 14.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xefnp"]
-size = Vector2(6.90095, 3.88999)
+size = Vector2(9.22524, 5.23625)
 
 [node name="Character" type="CharacterBody2D"]
 script = ExtResource("1_ak385")
@@ -165,11 +163,6 @@ position = Vector2(0, -7)
 sprite_frames = SubResource("SpriteFrames_8qxps")
 animation = &"walk_side"
 autoplay = "idle_forward"
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_uop4u")
-}
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -7)
@@ -182,6 +175,7 @@ position = Vector2(0, -7)
 shape = SubResource("CapsuleShape2D_ykg02")
 
 [node name="AttackArea" type="Area2D" parent="."]
+monitoring = false
 monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]

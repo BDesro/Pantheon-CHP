@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ddlexxqbx2qk6"
-path="res://.godot/imported/Pantheon_Soldier.png-0d103c97a62db20f8c67aed9a95b3acc.ctex"
+uid="uid://dmbweuv6uuce1"
+path="res://.godot/imported/Pantheon_Soldier(1).png-c27e74a2f134224bc46a629a8162a309.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Pantheon_Soldier.png"
-dest_files=["res://.godot/imported/Pantheon_Soldier.png-0d103c97a62db20f8c67aed9a95b3acc.ctex"]
+source_file="res://assets/Pantheon_Soldier(1).png"
+dest_files=["res://.godot/imported/Pantheon_Soldier(1).png-c27e74a2f134224bc46a629a8162a309.ctex"]
 
 [params]
 

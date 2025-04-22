@@ -20,6 +20,10 @@ config/icon="res://icon.svg"
 CharacterManager="*res://scripts/autoload/CharacterManager.gd"
 GameManager="*res://scripts/autoload/GameManager.gd"
 
+[global_group]
+
+enemies=""
+
 [input]
 
 move_left={

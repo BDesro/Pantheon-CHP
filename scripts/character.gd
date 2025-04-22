@@ -10,6 +10,8 @@ signal health_changed(current_health: int)
 @export var ascension_tier: int = 0
 @export var ascension_threshold: int = 1 # Number of kills to ascend to next tier
 
+var can_move: bool = true
+
 enum Team { RED = 1, BLUE = 2 }
 var team_id = Team.RED # Default team value to be changed upon instantiation
 
@@ -43,6 +45,8 @@ func _ready():
 func use_ability(ability_name: String):
 	if ability_name in abilities:
 		if ability_cooldowns[ability_name].is_stopped():
+			can_move = false
+			velocity = Vector2.ZERO
 			call(ability_name)
 			ability_cooldowns[ability_name].start()
 		else:
@@ -50,18 +54,19 @@ func use_ability(ability_name: String):
 	else:
 		print("Ability '" + ability_name + "' not found!")
 
+func _on_ability_end():
+	can_move = true
+
 func _on_cooldown_end(ability_name: String):
 	print(ability_name + " is off cooldown!")
-
-func primary():
-	print("primary used")
 
 func move_unit(desired_direction: Vector2):
 	# Normalize diagonal movement
 	if desired_direction.length() > 0:
 		desired_direction = desired_direction.normalized()
 	
-	velocity = desired_direction * speed
+	if can_move:
+		velocity = desired_direction * speed
 	move_and_slide()
 
 func die():
