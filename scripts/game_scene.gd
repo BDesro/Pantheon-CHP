@@ -6,10 +6,14 @@ extends Node2D
 func _ready():
 	pause_menu.visible = false
 
+# Checks if the user has pressed Esc 
 func _unhandled_input(event: InputEvent):
 	if event.is_action_pressed("Menu"):
 		toggle_pause()
 
+# Either pauses or unpauses the engine
+	# sets pause menu to visible (it only works when paused)
+	# sets HUD to invisible 
 func toggle_pause():
 	if Engine.is_editor_hint():
 		return # prevent pausing while testing in editor
