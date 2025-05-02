@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://ccelestqr2bns"]
 
-[ext_resource type="Script" path="res://hud.gd" id="1_g21ws"]
+[ext_resource type="Script" path="res://scripts/hud.gd" id="1_g21ws"]
 [ext_resource type="FontFile" uid="uid://obg2py2apxig" path="res://assets/Orange Kid.otf" id="2_hqpr8"]
 [ext_resource type="PackedScene" uid="uid://q5uf5fpgjgxu" path="res://scenes/health_bar.tscn" id="3_2fm3o"]
 

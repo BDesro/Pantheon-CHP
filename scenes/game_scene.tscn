@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=4 uid="uid://cxvl2dyidyuhn"]
+[gd_scene load_steps=19 format=4 uid="uid://cxvl2dyidyuhn"]
 
 [ext_resource type="Texture2D" uid="uid://dgcmaatrvhbtu" path="res://assets/SimpleSprites/SimpleSprites/Pasto[1].png" id="1_mvlw5"]
 [ext_resource type="Texture2D" uid="uid://p3hca0abyple" path="res://assets/SimpleSprites/SimpleSprites/Pasto[2].png" id="2_5yrhh"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://vbueu20k0scm" path="res://assets/SimpleSprites/SimpleSprites/fullSimpleTileset.png" id="6_2oyix"]
 [ext_resource type="PackedScene" uid="uid://bhgrhv3frpheo" path="res://scenes/player.tscn" id="7_siyto"]
 [ext_resource type="PackedScene" uid="uid://wkfi7fle6xmf" path="res://scenes/ai_controller.tscn" id="8_snifb"]
+[ext_resource type="PackedScene" uid="uid://ccelestqr2bns" path="res://scenes/hud.tscn" id="8_vog7a"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_shtey"]
 resource_name = "grass"
@@ -127,6 +128,8 @@ tile_map_data = PackedByteArray("AAATAP3/AAADAAAAAFAUAP7/AAAFAAAAAAAUAP//AAAFAAE
 tile_set = SubResource("TileSet_qlyl7")
 
 [node name="Player" parent="." instance=ExtResource("7_siyto")]
+
+[node name="HUD" parent="Player" instance=ExtResource("8_vog7a")]
 
 [node name="AI Controller" parent="." instance=ExtResource("8_snifb")]
 position = Vector2(-35, -9)

@@ -1,7 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://bhgrhv3frpheo"]
+[gd_scene load_steps=2 format=3 uid="uid://bhgrhv3frpheo"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_5sjut"]
-[ext_resource type="PackedScene" uid="uid://ccelestqr2bns" path="res://scenes/hud.tscn" id="2_vvj0p"]
 
 [node name="Player" type="Node2D"]
 top_level = true
@@ -12,8 +11,5 @@ zoom = Vector2(5.34, 5.34)
 
 [node name="Character" parent="." instance_placeholder="res://scenes/Characters/Character.tscn"]
 
-[node name="HUD" parent="." instance=ExtResource("2_vvj0p")]
-
-[connection signal="character_loaded" from="." to="HUD" method="_on_player_character_loaded"]
 [connection signal="fully_initialized" from="." to="." method="_on_character_fully_initialized"]
 [connection signal="health_changed" from="Character" to="." method="_on_character_health_changed"]
