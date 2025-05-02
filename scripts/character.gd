@@ -2,16 +2,19 @@ class_name Character
 extends CharacterBody2D
 
 signal ability_requested(ability_name: String)
+signal health_changed(current_health: int)
 
 @export var max_health: int = 100
+@export var current_health: int = max_health
 @export var speed = 50 # Base movement speed (pixels/sec)
 @export var ascension_tier: int = 0
 @export var ascension_threshold: int = 1 # Number of kills to ascend to next tier
 
+var can_move: bool = true
+
 enum Team { RED = 1, BLUE = 2 }
 var team_id = Team.RED # Default team value to be changed upon instantiation
 
-var current_health = max_health
 var abilities: Dictionary = {
 	"primary": {"cooldown": 1.5}
 }
@@ -22,8 +25,14 @@ var ability_cooldowns: Dictionary = {}
 @onready var attack_area = $AttackArea
 @onready var hurtbox = $Hurtbox
 @onready var collision_shape = $CollisionShape2D
+@onready var health_bar = $HealthBar
 
 func _ready():
+	current_health = max_health
+	
+	if get_parent().has_method("setup_camera"):
+		health_bar.hide()
+	
 	for ability_name in abilities.keys():
 		ability_cooldowns[ability_name] = Timer.new()
 		ability_cooldowns[ability_name].wait_time = abilities[ability_name]["cooldown"]
@@ -36,6 +45,8 @@ func _ready():
 func use_ability(ability_name: String):
 	if ability_name in abilities:
 		if ability_cooldowns[ability_name].is_stopped():
+			can_move = false
+			velocity = Vector2.ZERO
 			call(ability_name)
 			ability_cooldowns[ability_name].start()
 		else:
@@ -43,18 +54,19 @@ func use_ability(ability_name: String):
 	else:
 		print("Ability '" + ability_name + "' not found!")
 
+func _on_ability_end():
+	can_move = true
+
 func _on_cooldown_end(ability_name: String):
 	print(ability_name + " is off cooldown!")
-
-func primary():
-	print("primary used")
 
 func move_unit(desired_direction: Vector2):
 	# Normalize diagonal movement
 	if desired_direction.length() > 0:
 		desired_direction = desired_direction.normalized()
 	
-	velocity = desired_direction * speed
+	if can_move:
+		velocity = desired_direction * speed
 	move_and_slide()
 
 func die():
@@ -95,15 +107,23 @@ func _on_death(killer):
 	GameManager.deregister_unit(self)
 
 func _on_hurtbox_body_entered(body: Node2D) -> void:
-	if body.is_in_group("enemy_attacks"):
+	if body.is_class("Hurtbox"):
 		take_damage(body.damage)
 
 func take_damage(amount: int):
-	current_health -= amount
+	current_health = clamp(current_health - amount, 0, max_health)
 	print("Character took", amount, "damage! Remaining HP:", current_health)
+	health_changed.emit(current_health)
 	if current_health <= 0:
 		die()
 
+func heal(amount: int):
+	current_health = clamp(current_health + amount, 0, max_health)
+	print("Character healed", amount, "health. New Health:", current_health)
+	health_changed.emit(current_health)
+
 func _on_attack_area_body_entered(body: Node2D) -> void:
+	if body.is_class("CollisionShape2D"):
+		body.take_damage(30)
 	if body.is_in_group("enemies"):
 		body.take_damage(30)

@@ -6,4 +6,4 @@
 top_level = true
 script = ExtResource("1_pmvpi")
 
-[node name="Character" parent="." instance_placeholder="res://scenes/Characters/Character.tscn"]
+[node name="Character" parent="." instance_placeholder="res://scenes/characters/character.tscn"]

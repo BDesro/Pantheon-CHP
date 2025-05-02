@@ -1,6 +1,8 @@
 class_name AIController
 extends BaseController
 
+func take_damage(amount: int):
+	character.take_damage(amount)
 
 #var cur_state: AIState = null
 #enum AIStateType {

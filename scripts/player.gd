@@ -1,15 +1,25 @@
 class_name Player
 extends BaseController
 
+signal character_loaded(max_health)
 
 var camera: Camera2D
 
+@onready var hud = $HUD
+
 func _ready():
 	super._ready()
-	
 	# Initialize camera and check ability bindings
 	setup_camera()
 	ensure_input_actions_exist()
+
+func _on_character_fully_initialized():
+	_post_ready()
+
+func _post_ready():
+	#get_character_health()
+	if character:
+		character_loaded.emit(character.max_health)
 
 func _process(_delta):
 	handle_input()
@@ -23,21 +33,6 @@ func handle_input():
 	var direction = (mouse_position - character.global_position).normalized()
 	
 	character.rotation = direction.angle() + PI / 2
-	
-	#var right_direction = direction.rotated(PI / 2)  # Perpendicular for strafing
-#
-	## Get input vector
-	#var input_vector = Vector2.ZERO
-	#if Input.is_action_pressed("move_forward"):  # "W" moves toward the mouse
-		#input_vector += direction
-	#if Input.is_action_pressed("move_backward"):  # "S" moves opposite the mouse
-		#input_vector -= direction
-	#if Input.is_action_pressed("move_left"):  # "A" strafes left
-		#input_vector -= right_direction
-	#if Input.is_action_pressed("move_right"):  # "D" strafes right
-		#input_vector += right_direction
-	#
-	#character.move_unit(input_vector)
 	
 	# Basic movement
 	var input_direction = Input.get_vector("move_left", "move_right", "move_forward", "move_backward")

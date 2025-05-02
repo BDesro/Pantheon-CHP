@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/character.gd" id="1_ak385"]
 [ext_resource type="Texture2D" uid="uid://bs0tg8kbef8ov" path="res://assets/Prototype Character Assets/Prototype_Character/Prototype_Character.png" id="2_1ejny"]
+[ext_resource type="PackedScene" uid="uid://c4g8eyt04ea0u" path="res://scenes/character_health_bar.tscn" id="3_03pu0"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_smk2x"]
 atlas = ExtResource("2_1ejny")
@@ -143,33 +144,25 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_uop4u"]
-
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3rjh8"]
 radius = 4.0
 height = 14.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ykg02"]
-radius = 9.52381
-height = 30.4762
+radius = 4.0
+height = 14.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xefnp"]
-size = Vector2(6.90095, 3.88999)
+size = Vector2(9.22524, 5.23625)
 
 [node name="Character" type="CharacterBody2D"]
 script = ExtResource("1_ak385")
-metadata/_edit_group_ = true
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -7)
 sprite_frames = SubResource("SpriteFrames_8qxps")
 animation = &"walk_side"
 autoplay = "idle_forward"
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_uop4u")
-}
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -7)
@@ -191,5 +184,16 @@ shape = SubResource("RectangleShape2D_xefnp")
 
 [node name="StateMachine" type="Node" parent="."]
 
+[node name="HealthBar" parent="." instance=ExtResource("3_03pu0")]
+position = Vector2(-5, 8)
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="."]
+position = Vector2(-5, 8)
+scale = Vector2(0.03, 0.03)
+remote_path = NodePath("../HealthBar")
+update_rotation = false
+update_scale = false
+
+[connection signal="health_changed" from="." to="HealthBar" method="set_health"]
 [connection signal="body_entered" from="Hurtbox" to="." method="_on_hurtbox_body_entered"]
 [connection signal="body_entered" from="AttackArea" to="." method="_on_attack_area_body_entered"]
