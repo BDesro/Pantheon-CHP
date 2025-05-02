@@ -135,7 +135,6 @@ tile_set = SubResource("TileSet_qlyl7")
 [node name="HUD" parent="Player" instance=ExtResource("8_vog7a")]
 
 [node name="AI Controller" parent="." instance=ExtResource("8_snifb")]
-visible = false
 position = Vector2(-35, -9)
 
 [node name="PauseMenu" type="CanvasLayer" parent="."]
