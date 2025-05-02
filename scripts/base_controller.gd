@@ -7,6 +7,8 @@ extends Node2D
 
 signal fully_initialized()
 
+var kills = 0 # Connect AI death signal to player (globalize player), increment score in HUD
+
 func _ready():
 	if character:
 		remove_child(character)
