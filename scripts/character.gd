@@ -112,14 +112,14 @@ func _on_hurtbox_body_entered(body: Node2D) -> void:
 
 func take_damage(amount: int):
 	current_health = clamp(current_health - amount, 0, max_health)
-	print("Character took", amount, "damage! Remaining HP:", current_health)
+	print("Character took ", amount, " damage! Remaining HP: ", current_health)
 	health_changed.emit(current_health)
 	if current_health <= 0:
 		die()
 
 func heal(amount: int):
 	current_health = clamp(current_health + amount, 0, max_health)
-	print("Character healed", amount, "health. New Health:", current_health)
+	print("Character healed ", amount, " health. New Health: ", current_health)
 	health_changed.emit(current_health)
 
 func _on_attack_area_body_entered(body: Node2D) -> void:
