@@ -12,6 +12,7 @@ func _ready():
 	# Initialize camera and check ability bindings
 	setup_camera()
 	ensure_input_actions_exist()
+	add_to_group("Player")
 
 func _on_character_fully_initialized():
 	_post_ready()
